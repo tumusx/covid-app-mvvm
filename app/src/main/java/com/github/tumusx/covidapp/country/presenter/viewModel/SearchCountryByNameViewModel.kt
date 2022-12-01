@@ -13,8 +13,7 @@ import kotlinx.coroutines.runBlocking
 import kotlin.coroutines.CoroutineContext
 
 class SearchCountryByNameViewModel(
-    private val searchCountryByRepository: ISearchCountryRepository =
-        SearchCountryRepositoryImpl(),
+    private val searchCountryByRepository: ISearchCountryRepository,
     private val coroutineContext: CoroutineContext
 ) :
     ViewModel() {

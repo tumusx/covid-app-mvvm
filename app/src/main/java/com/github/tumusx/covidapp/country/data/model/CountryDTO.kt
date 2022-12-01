@@ -2,10 +2,6 @@ package com.github.tumusx.covidapp.country.data.model
 
 import com.github.tumusx.covidapp.country.domain.model.CountryVO
 
-data class JConfig(
-   var data: CountryDTO? = null
-)
-
 data class CountryDTO(
     var cases: Int? = null,
 

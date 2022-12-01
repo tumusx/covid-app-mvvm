@@ -12,8 +12,7 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 class SearchDataCovidByStateViewModel(
-    private val repository: ISearchDataCovidByStateRepository =
-        SearchDataCovidByStateRepositoryImpl(),
+    private val repository: ISearchDataCovidByStateRepository,
     private val coroutineContext: CoroutineContext
 ) : ViewModel() {
     private val _state: MutableStateFlow<DataStateUI> =
@@ -23,7 +22,7 @@ class SearchDataCovidByStateViewModel(
     fun searchDataByState(ufState: String) {
         viewModelScope.launch(coroutineContext) {
             repository.getDataByState("brazil", ufState).onSuccess { stateVoResult ->
-                _state.value = DataStateUI.SuccessDataUI<StateVO>(stateVoResult)
+                _state.value = DataStateUI.SuccessDataUI(stateVoResult)
             }.onFailure {
                 _state.value = DataStateUI.ErrorDataUI(it.message ?: "unknown error")
                 it.printStackTrace()

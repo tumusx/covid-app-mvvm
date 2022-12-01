@@ -7,9 +7,7 @@ import com.github.tumusx.covidapp.country.domain.repository.ISearchCountryReposi
 import com.github.tumusx.covidapp.retrofitInstance.RetrofitInstance
 
 class SearchCountryRepositoryImpl(
-    private val service: IService = RetrofitInstance.onCreateRetrofit.create(
-        IService::class.java
-    )
+    private val service: IService
 ) : ISearchCountryRepository {
     override suspend fun searchCountryByName(nameCountry: String): Result<CountryVO?> {
         return runCatching {

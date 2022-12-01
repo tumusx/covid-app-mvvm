@@ -56,4 +56,5 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.0-alpha03")
     implementation("io.insert-koin:koin-core:3.2.2")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("io.insert-koin:koin-android:3.2.2")
 }
