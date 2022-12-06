@@ -29,12 +29,13 @@ class CountryFragment : Fragment() {
         return binding.root
     }
 
-    private fun onShowMessageNotFoundCountry(nameCountry: String?) {
-        if (nameCountry == null) Toast.makeText(
-            requireContext(),
-            "país não encontrado. tente novamente",
-            Toast.LENGTH_LONG
-        ).show()
+    private fun onConfigureUI(countryVO: CountryVO) {
+        binding.nameCountry.text = "nome do país: " + countryVO.nameCountry ?: "sem dados"
+        binding.confirmed.text = "confirmado: " + countryVO.confirmed.toString() ?: "sem dados"
+        binding.qtdDeaths.text =
+            "quantidade de mortes: " + countryVO.qtdDeaths.toString() ?: "sem dados"
+        binding.updatedAt.text =
+            "ultima atualizacao: " + countryVO.updatedAt.toString() ?: "sem dados"
     }
 
     private fun onResultState() {
@@ -43,8 +44,7 @@ class CountryFragment : Fragment() {
                 when (state) {
                     is DataStateUI.SuccessDataUI<*> -> {
                         val county = (state.data as CountryVO)
-                        onShowMessageNotFoundCountry(county.nameCountry)
-                        println(county)
+                        if (county.nameCountry != null) onConfigureUI(county)
                     }
 
                     is DataStateUI.ErrorDataUI -> {
@@ -59,7 +59,7 @@ class CountryFragment : Fragment() {
         }
     }
 
-    private fun onConfigureSubmitCountry(query: String?) {
+    private fun onConfigureSubmitNameCountry(query: String?) {
         query?.let { text ->
             viewModel.searchCountryByName(text)
         }.also {
@@ -71,7 +71,7 @@ class CountryFragment : Fragment() {
     private fun onConfigureSearchCountry() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                onConfigureSubmitCountry(query)
+                onConfigureSubmitNameCountry(query)
                 return false
             }
 

@@ -2,14 +2,11 @@ package com.github.tumusx.covidapp.country.presenter.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.tumusx.covidapp.country.data.repository.SearchCountryRepositoryImpl
 import com.github.tumusx.covidapp.country.domain.repository.ISearchCountryRepository
 import com.github.tumusx.covidapp.state.DataStateUI
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import kotlin.coroutines.CoroutineContext
 
 class SearchCountryByNameViewModel(
@@ -30,17 +27,6 @@ class SearchCountryByNameViewModel(
                 _state.value = DataStateUI.ErrorDataUI(error.message ?: "unknown error")
                 println(error.message)
             }
-        }
-    }
-
-    fun filterDataByDate(nameCountry: String, date: String) {
-        viewModelScope.launch(coroutineContext) {
-            searchCountryByRepository.filterCountryByDate(nameCountry, date)
-                .onSuccess { countryList ->
-                    println(countryList)
-                }.onFailure { throwable ->
-                    throwable.printStackTrace()
-                }
         }
     }
 }

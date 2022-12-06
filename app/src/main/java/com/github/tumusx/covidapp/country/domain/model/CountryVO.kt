@@ -5,5 +5,5 @@ data class CountryVO(
     var updatedAt: String? = null,
     var qtdDeaths: Int? = null,
     var confirmed: Int? = null,
-    var cases: Int? = null,
+    var cases: Int?,
 )
