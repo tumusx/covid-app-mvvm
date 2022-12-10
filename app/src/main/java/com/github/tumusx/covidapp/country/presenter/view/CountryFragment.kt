@@ -26,10 +26,13 @@ class CountryFragment : Fragment() {
         binding = CountryFragmentBinding.inflate(layoutInflater)
         onConfigureSearchCountry()
         onResultState()
+        onConfigureListeners()
+        onConfigureResultList()
         return binding.root
     }
 
     private fun onConfigureUI(countryVO: CountryVO) {
+
         binding.nameCountry.text = "nome do país: " + countryVO.nameCountry ?: "sem dados"
         binding.confirmed.text = "confirmado: " + countryVO.confirmed.toString() ?: "sem dados"
         binding.qtdDeaths.text =
@@ -38,13 +41,38 @@ class CountryFragment : Fragment() {
             "ultima atualizacao: " + countryVO.updatedAt.toString() ?: "sem dados"
     }
 
+
     private fun onResultState() {
         lifecycleScope.launch {
             viewModel.stateUI.collect { state ->
                 when (state) {
                     is DataStateUI.SuccessDataUI<*> -> {
                         val county = (state.data as CountryVO)
-                        if (county.nameCountry != null) onConfigureUI(county)
+                        if (county.nameCountry != null) {
+                            onConfigureUI(county)
+                            viewModel.insetItem(county)
+                        }
+                    }
+
+                    is DataStateUI.ErrorDataUI -> {
+                        println(state.error)
+                    }
+
+                    is DataStateUI.Loading -> {
+                        println("loading")
+                    }
+                }
+            }
+        }
+    }
+
+    private fun onConfigureResultList() {
+        lifecycleScope.launch{
+            viewModel.stateDataBase.collect { state ->
+                when (state) {
+                    is DataStateUI.SuccessDataUI<*> -> {
+                        val county = state.data as List<CountryVO>
+                        if (county.first().nameCountry != null && county.isNotEmpty()) onConfigureUI(county.first())
                     }
 
                     is DataStateUI.ErrorDataUI -> {
@@ -65,6 +93,12 @@ class CountryFragment : Fragment() {
         }.also {
             Toast.makeText(requireContext(), "Pesquisando o pais $query", Toast.LENGTH_LONG)
                 .show()
+        }
+    }
+
+    private fun onConfigureListeners(){
+        binding.button.setOnClickListener {
+            viewModel.listAllItems()
         }
     }
 

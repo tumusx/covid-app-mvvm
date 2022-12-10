@@ -15,40 +15,23 @@ import org.junit.Test
 class SearchCountryByNameViewModelTest {
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
-
     @get:Rule
     val coroutineContextRule = MainCoroutineRule()
-
     private lateinit var viewModel: SearchCountryByNameViewModel
-
     @Before
     fun setup() {
         viewModel = SearchCountryByNameViewModel(
             SearchDataCovidByStateRepositoryImplTest(),
-            coroutineContextRule.testScheduler
+            coroutineContextRule.testScheduler,
         )
     }
-
-
-
-
     @Test
     fun searchCountryResult() {
         viewModel.searchCountryByName("brazil")
         assertEquals(
             viewModel.stateUI.value,
             DataStateUI.SuccessDataUI(
-                CountryVO(
-                    nameCountry = "Brazil",
-                    updatedAt = "2020/10/02",
-                    123,
-                    145,
-                    145
-                )
-            )
-        )
-    }
-
+                CountryVO(nameCountry = "Brazil", updatedAt = "2020/10/02", 123, 145, 145))) }
     @Test
     fun searchCountryReturnError(){
         viewModel.searchCountryByName("")

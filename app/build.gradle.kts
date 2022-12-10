@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -51,6 +53,10 @@ dependencies {
     implementation("androidx.arch.core:core-testing:2.1.0")
     testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    val room_version = "2.4.3"
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    // To use Kotlin annotation processing tool (kapt)
     implementation("com.squareup.retrofit2:converter-moshi:2.4.0")
     implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")

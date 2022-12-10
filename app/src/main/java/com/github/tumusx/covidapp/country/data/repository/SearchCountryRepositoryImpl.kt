@@ -5,7 +5,7 @@ import com.github.tumusx.covidapp.country.domain.model.CountryVO
 import com.github.tumusx.covidapp.country.domain.repository.ISearchCountryRepository
 
 class SearchCountryRepositoryImpl(
-    private val service: IService
+    private val service: IService,
 ) : ISearchCountryRepository {
     override suspend fun searchCountryByName(nameCountry: String): Result<CountryVO?> {
         return runCatching {
@@ -17,4 +17,5 @@ class SearchCountryRepositoryImpl(
             }
         }
     }
+
 }
